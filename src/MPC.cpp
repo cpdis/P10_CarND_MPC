@@ -55,20 +55,20 @@ class FG_eval {
  
     // Reference state cost.
     for (int i = 0; i < N; i++) {
-      fg[0] += 3000 * CppAD::pow(vars[cte_start + i], 2);
-      fg[0] += 3000 * CppAD::pow(vars[epsi_start + i], 2);
+      fg[0] += 1000 * CppAD::pow(vars[cte_start + i], 2);
+      fg[0] += 1000 * CppAD::pow(vars[epsi_start + i], 2);
       fg[0] += CppAD::pow(vars[v_start + i] - ref_v, 2);
     }
     // Reduce the use of the actuators.
     for (int i = 0; i < N - 1; i++) {
-      fg[0] += 5 * CppAD::pow(vars[delta_start + i], 2);
-      fg[0] += 5 * CppAD::pow(vars[a_start + i], 2);
+      fg[0] += 50 * CppAD::pow(vars[delta_start + i], 2);
+      fg[0] += 50 * CppAD::pow(vars[a_start + i], 2);
       fg[0] += 700 * CppAD::pow(vars[delta_start + i] * vars[v_start+i], 2);
     }
     // Minimize the seperation between actuations that occur in succession.
     for (int i = 0; i < N - 2; i++) {
-      fg[0] += 200 * CppAD::pow(vars[delta_start + i + 1] - vars[delta_start + i], 2);
-      fg[0] += 10 * CppAD::pow(vars[a_start + i + 1] - vars[a_start + i], 2);
+      fg[0] += 2500 * CppAD::pow(vars[delta_start + i + 1] - vars[delta_start + i], 2);
+      fg[0] += 100 * CppAD::pow(vars[a_start + i + 1] - vars[a_start + i], 2);
     }
  
     // Specify the intial constraints on the system

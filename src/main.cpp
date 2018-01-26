@@ -102,9 +102,7 @@ int main() {
           vector<double> waypoints_x;
           vector<double> waypoints_y;
 
-          // transform waypoints to be from car's perspective
-          // this means we can consider px = 0, py = 0, and psi = 0
-          // greatly simplifying future calculations
+          // Transform the waypoints coordinates to the cars coordinates.
           for (int i = 0; i < ptsx.size(); i++) {
             double dx = ptsx[i] - px;
             double dy = ptsy[i] - py;
@@ -117,6 +115,7 @@ int main() {
           Eigen::Map<Eigen::VectorXd> waypoints_x_eig(ptrx, 6);
           Eigen::Map<Eigen::VectorXd> waypoints_y_eig(ptry, 6);
 
+          // Fit 3rd order polynomial to the points.
           auto coeffs = polyfit(waypoints_x_eig, waypoints_y_eig, 3);
           double cte = polyeval(coeffs, 0);  // px = 0, py = 0
           double epsi = -atan(coeffs[1]);  // p
@@ -124,9 +123,11 @@ int main() {
           double steer_value = j[1]["steering_angle"];
           double throttle_value = j[1]["throttle"];
 
+          // Find the MPC solution.
           Eigen::VectorXd state(6);
           state << 0, 0, 0, v, cte, epsi;
           auto vars = mpc.Solve(state, coeffs);
+          
           steer_value = vars[0];
           throttle_value = vars[1];
 
@@ -140,9 +141,7 @@ int main() {
           vector<double> mpc_x_vals;
           vector<double> mpc_y_vals;
 
-          //.. add (x,y) points to list here, points are in reference to the vehicle's coordinate system
-          // the points in the simulator are connected by a Green line
-
+          // Add additional points to the list that are connected by the green line. 
           for (int i = 2; i < vars.size(); i ++) {
             if (i%2 == 0) {
               mpc_x_vals.push_back(vars[i]);
@@ -159,8 +158,7 @@ int main() {
           vector<double> next_x_vals;
           vector<double> next_y_vals;
 
-          //.. add (x,y) points to list here, points are in reference to the vehicle's coordinate system
-          // the points in the simulator are connected by a Yellow line
+          // Add additional points to the list that are connected by the yellow line. 
 
           for (double i = 0; i < 100; i += 3){
             next_x_vals.push_back(i);
