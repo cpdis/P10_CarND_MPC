@@ -112,6 +112,7 @@ int main() {
 
           double* ptrx = &waypoints_x[0];
           double* ptry = &waypoints_y[0];
+          
           Eigen::Map<Eigen::VectorXd> waypoints_x_eig(ptrx, 6);
           Eigen::Map<Eigen::VectorXd> waypoints_y_eig(ptry, 6);
 
@@ -137,7 +138,7 @@ int main() {
           msgJson["steering_angle"] = steer_value/(deg2rad(25));
           msgJson["throttle"] = throttle_value;
 
-          //Display the MPC predicted trajectory 
+          // Display the MPC predicted trajectory. 
           vector<double> mpc_x_vals;
           vector<double> mpc_y_vals;
 
