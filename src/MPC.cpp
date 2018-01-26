@@ -97,7 +97,7 @@ class FG_eval {
       }
       // State at t+1
       AD<double> x1    = vars[x_start + j];
-      AD<double> y1    = vars[y_start + j;
+      AD<double> y1    = vars[y_start + j];
       AD<double> psi1  = vars[psi_start + j];
       AD<double> v1    = vars[v_start + j];
       AD<double> cte1  = vars[cte_start + j];
