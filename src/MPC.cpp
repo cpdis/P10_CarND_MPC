@@ -94,7 +94,7 @@ class FG_eval {
       if (j > 1) {
         a0 = vars[a_start + j - 2];
         delta = vars[delta_start + j - 2];     
- 
+      }
       // State at t+1
       AD<double> x1    = vars[x_start + j];
       AD<double> y1    = vars[y_start + j;
